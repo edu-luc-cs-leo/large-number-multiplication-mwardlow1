@@ -57,17 +57,80 @@ public class TrainLine {
      * METHOD STUBS TO ENSURE CODE COMPILES. YOU WILL HAVE TO REWRITE THIS CODE TO
      * MATCH THE SPECIFICATIONS AND ALSO YOU'LL HAVE TO WRITE METHOD isEmpty.
      */
+
     public boolean contains(String name) {
-        return false;
+        if (name == null) return false; 
+        TrainStation cursor = this.head; 
+        while (cursor != null) {
+            if (cursor.getName().equals(name)) {
+                return true;        // Returns true if the station name is given by the string parameter, and if it exists in a the object.
+            }
+            cursor = cursor.getNext(); 
+        }
+        return false;   // returns false if no station is found
     }
 
     public int indexOf(String name) {
-        return -10;
+        if (name == null) return -1;
+    TrainStation cursor = this.head;
+    int index = 0; 
+    while (cursor != null) {
+        if (cursor.getName().equals(name)) {
+            return index; 
+        }
+        cursor = cursor.getNext();
+        index++; 
+    }
+    return -1;
     }
 
     public String reverseList() {
-        return "niart";
+        if (this.head == null) return "";  // If the list is empty, it returns an empty string
+
+        TrainStation cursor = this.head;
+        String result = "";  // Result string that will hold the reversed station names
+    
+        while (cursor != null) {
+            // add each station name to the result string
+            result = cursor.getName() + "\n" + result;
+            cursor = cursor.getNext();  // moves to the next station
+        }
+        
+        return result;
     }
+
+    public boolean isEmpty() {
+        return this.head == null; // Returns true if there are no stations, otherwise false
+    }
+
+    /*public TrainStation remove(int position) {
+        TrainStation removed = null;
+        //Operate this method if position is legal
+        if (position > 0 && position < this.numberOfStations) {
+            if (position == 1) {
+                // Special case, remove head
+                removed = this.head;
+                this.head = this.head.getNext();
+            } else {
+                // find station prior to the one to be removed
+                TrainStation cursor = this.head;
+                for (int i = 1; i < position - 1; i++) {
+                    cursor = cursor.getNext();
+                }
+                // cursor is now @ prior
+                if (cursor.getNext() == this.tail) {
+                    this.tail = cursor;
+                }
+                removed = cursor.getNext();
+                cursor.setNext(cursor.getNext().getNext());
+                removed.setNext(null);
+            }
+            removed.setNext(null);
+            this.numberOfStations - 1;
+        }
+        return removed;
+    } // method remove
+    
 
     /*******************************************************************************
      * DO NOT REMOVE TESTS FROM THE CODE BELOW. YOU MAY **ADD** YOUR OWN TESTS BUT *
@@ -83,7 +146,7 @@ public class TrainLine {
             redLineSB.add(station);
         }
         // An empty trainline
-        prep_TrainLine brownLineSB = new prep_TrainLine("Brown Line SB");
+        TrainLine brownLineSB = new TrainLine("Brown Line SB");
         // A random station name
         String randomName = "Oak Park";
         // Guard tests
@@ -133,5 +196,17 @@ public class TrainLine {
         System.out.printf(formatContainsTestNonExisting, reportContainsTestNonExisting);
         System.out.printf(formatReverseListTest, reportReverseListTest);
         // ----------- YOU MAY ADD YOUR OWN TESTS BELOW THIS COMMENT LINE ---------------
+
+        redLineSB.contains("Morse"); // true
+        redLineSB.contains("Bryn Mawr"); // false
+        System.out.println(redLineSB.isEmpty()); // returns false
+        
+        redLineSB.indexOf("Loyola");  // returns 3
+        redLineSB.indexOf("Oak Park"); // returns -1
+
+        System.out.println(redLineSB.reverseList());
+
+        System.out.println(redLineSB.isEmpty()); // returns false
+
     } // method main
 } // class TrainLine
