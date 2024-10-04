@@ -37,10 +37,12 @@ public class TrainLine {
         if (this.head == null) {
             // Trainline is empty, make new station the head of the line
             this.head = newStation;
+            this.tail = newStation;
         } else {
             // When there is a head station already, add the new station after the last
             // station in the line.
             this.tail.setNext(newStation);
+            this.tail = newStation;
         }
         // The new station becomes the tail station of the line
         this.tail = newStation;
@@ -102,34 +104,6 @@ public class TrainLine {
     public boolean isEmpty() {
         return this.head == null; // Returns true if there are no stations, otherwise false
     }
-
-    /*public TrainStation remove(int position) {
-        TrainStation removed = null;
-        //Operate this method if position is legal
-        if (position > 0 && position < this.numberOfStations) {
-            if (position == 1) {
-                // Special case, remove head
-                removed = this.head;
-                this.head = this.head.getNext();
-            } else {
-                // find station prior to the one to be removed
-                TrainStation cursor = this.head;
-                for (int i = 1; i < position - 1; i++) {
-                    cursor = cursor.getNext();
-                }
-                // cursor is now @ prior
-                if (cursor.getNext() == this.tail) {
-                    this.tail = cursor;
-                }
-                removed = cursor.getNext();
-                cursor.setNext(cursor.getNext().getNext());
-                removed.setNext(null);
-            }
-            removed.setNext(null);
-            this.numberOfStations - 1;
-        }
-        return removed;
-    } // method remove
     
 
     /*******************************************************************************
@@ -197,14 +171,14 @@ public class TrainLine {
         System.out.printf(formatReverseListTest, reportReverseListTest);
         // ----------- YOU MAY ADD YOUR OWN TESTS BELOW THIS COMMENT LINE ---------------
 
-        redLineSB.contains("Morse"); // true
-        redLineSB.contains("Bryn Mawr"); // false
-        System.out.println(redLineSB.isEmpty()); // returns false
-        
-        redLineSB.indexOf("Loyola");  // returns 3
-        redLineSB.indexOf("Oak Park"); // returns -1
 
-        System.out.println(redLineSB.reverseList());
+        System.out.println(redLineSB.contains("Morse"));    // true
+        System.out.println(redLineSB.contains("Bryn Mawr")); // false
+
+        System.out.println(redLineSB.indexOf("Loyola"));     // returns 3
+        System.out.println(redLineSB.indexOf("Oak Park"));   // returns -1
+
+        System.out.println(redLineSB.reverseList());        // returns the revesred order of the redline stops
 
         System.out.println(redLineSB.isEmpty()); // returns false
 

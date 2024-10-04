@@ -1,4 +1,4 @@
-public class TrainLine {
+public class TrainLinee {
 
     /** The name of the trainline */
     private String name;
@@ -54,6 +54,33 @@ public class TrainLine {
     } // method getNumberOfStations
 
 
+    public TrainStation remove(int position) {
+        TrainStation removed = null;
+        //Operate this method if position is legal
+        if (position > 0 && position < this.numberOfStations) {
+            if (position == 1) {
+                // Special case, remove head
+                removed = this.head;
+                this.head = this.head.getNext();
+            } else {
+                // find station prior to the one to be removed
+                TrainStation cursor = this.head;
+                for (int i = 1; i < position - 1; i++) {
+                    cursor = cursor.getNext();
+                }
+                // cursor is now @ prior
+                if (cursor.getNext() == this.tail) {
+                    this.tail = cursor;
+                }
+                removed = cursor.getNext();
+                cursor.setNext(cursor.getNext().getNext());
+                removed.setNext(null);
+            }
+            removed.setNext(null);
+            this.numberOfStations - 1;
+        }
+        return removed;
+    } // method remove
     public static void main(String[] args) {
         // A few station names
         String[] stationNames = { "Howard", "Jarvis", "Morse",
@@ -63,6 +90,7 @@ public class TrainLine {
         for (String station : stationNames) {
             redLineSB.add(station);
         }
+
         // An empty trainline
         prep_TrainLine brownLineSB = new prep_TrainLine("Brown Line SB");
         // A random station name
