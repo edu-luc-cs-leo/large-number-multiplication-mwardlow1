@@ -136,7 +136,7 @@ public String toString() {
     while (current != null) {
         String stationName = current.getName();
         
-        // If the line length would exceed 80 chars with this station, break to a new line
+        // break to a new line if line length exceeds 80 characters
         if (charCount + stationName.length() + forwardArrow.length() > 80) {
             result.append("\n");  // New line
             charCount = 0;        // Reset character count
@@ -161,27 +161,39 @@ public String toString() {
     result.setLength(result.length() - lastArrowLength);
     
     return result.toString();
-}
+} // couldn't quite figure this out out fully
 
     
-    public static void main(String[] args) {
-        // A few station names
-        String[] stationNames = { "Howard", "Jarvis", "Morse",
-                "Loyola", "Granville", "Thorndale" };
-        // A populated trainline
-        TrainLine redLineSB = new TrainLine("Red Line SB");
-        for (String station : stationNames) {
-            redLineSB.add(station);
-        }
-        
-        //Test case for void insert method
-        System.out.println("Insert Morse to position 2");
-        redLineSB.insert("Morse", 2);
-        redLineSB.printTrainLine();
+public static void main(String[] args) {
+    // A few station names
+    String[] stationNames = { "Howard", "Jarvis", "Morse",
+            "Loyola", "Granville", "Thorndale" };
+    // A populated trainline
+    TrainLine redLineSB = new TrainLine("Red Line SB");
+    for (String station : stationNames) {
+        redLineSB.add(station);
+    }
 
-        // An empty trainline
-        //prep_TrainLine brownLineSB = new prep_TrainLine("Brown Line SB");
-        // A random station name
-        //String randomName = "Oak Park";
-    } // method main
+    // Test case for void insert method
+    System.out.println("Insert Morse to position 2");
+    redLineSB.insert("Morse", 2);
+    redLineSB.printTrainLine();
+
+    // Test case for toString method with extended station list
+    System.out.println("Snake-like visualization: ");
+    String[] extendedStationNames = { "Howard", "Jarvis", "Morse", "Loyola", "Granville", "Thorndale", 
+                            "Addison", "Sheridan", "Wilson", "Argyle", "Bryn Mawr", 
+                            "Belmont", "Fullerton", "North/Clybourn", "Clark/Division", 
+                            "Roosevelt", "Harrison", "Jackson", "Monroe", "Clark", "Chicago", 
+                            "Cermak-Chinatown", "Sox-35th", "47th", "Garfield", "63rd", 
+                            "69th", "95th/Dan Ryan", "87th", "79th" };
+
+    for (String station : extendedStationNames) {
+        redLineSB.add(station);
+    }
+
+    // Print the string representation of the TrainLine
+    System.out.println(redLineSB.toString());
+} // method main
+
 } // class TrainLine
