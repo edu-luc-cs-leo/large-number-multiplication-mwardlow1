@@ -1,4 +1,4 @@
-public class TrainLinee {
+public class TrainLine {
 
     /** The name of the trainline */
     private String name;
@@ -81,6 +81,89 @@ public class TrainLinee {
         }
         return removed;
     } // method remove
+
+    //method to print the trainline
+    public void printTrainLine() {
+        TrainStation current = this.head;
+        while (current != null) {
+            System.out.print(current.getName() + " -> ");
+            current = current.getNext();
+        }
+        System.out.println("null");
+    }
+
+    //instert method
+    public void insert(String name, int position) {
+        // Create the new station
+        TrainStation newStation = new TrainStation(name);
+    
+        // If the position is at the head (position 0)
+        if (position == 0) {
+            newStation.setNext(this.head);
+            this.head = newStation;
+            if (this.tail == null) { // If the list was empty, set tail too
+                this.tail = newStation;
+            }
+        } else {
+            // Traverse the trainline to find the station before the position
+            TrainStation cursor = this.head;
+            for (int i = 1; i < position; i++) {
+                cursor = cursor.getNext();
+            }
+    
+            // Insert the new station after the cursor
+            newStation.setNext(cursor.getNext());
+            cursor.setNext(newStation);
+    
+            // If we're inserting at the end, update the tail
+            if (newStation.getNext() == null) {
+                this.tail = newStation;
+            }
+        }
+    
+        // Update the count of stations
+        this.numberOfStations++;
+    }
+//toString method
+public String toString() {
+    StringBuilder result = new StringBuilder();
+    TrainStation current = this.head;
+    int charCount = 0;
+    boolean forward = true;  // Keep track of direction (--> or <--)
+    String forwardArrow = " --> ";
+    String backwardArrow = " <-- ";
+
+    while (current != null) {
+        String stationName = current.getName();
+        
+        // If the line length would exceed 80 chars with this station, break to a new line
+        if (charCount + stationName.length() + forwardArrow.length() > 80) {
+            result.append("\n");  // New line
+            charCount = 0;        // Reset character count
+            forward = !forward;   // Switch direction
+        }
+
+        if (forward) {
+            // Add station and forward arrow
+            result.append(stationName).append(forwardArrow);
+            charCount += stationName.length() + forwardArrow.length();
+        } else {
+            // Add backward arrow and station in reverse
+            result.insert(0, backwardArrow + stationName);
+            charCount += stationName.length() + backwardArrow.length();
+        }
+
+        current = current.getNext();
+    }
+
+    // Trim final trailing arrow
+    int lastArrowLength = forward ? forwardArrow.length() : backwardArrow.length();
+    result.setLength(result.length() - lastArrowLength);
+    
+    return result.toString();
+}
+
+    
     public static void main(String[] args) {
         // A few station names
         String[] stationNames = { "Howard", "Jarvis", "Morse",
@@ -90,10 +173,15 @@ public class TrainLinee {
         for (String station : stationNames) {
             redLineSB.add(station);
         }
+        
+        //Test case for void insert method
+        System.out.println("Insert Morse to position 2");
+        redLineSB.insert("Morse", 2);
+        redLineSB.printTrainLine();
 
         // An empty trainline
-        prep_TrainLine brownLineSB = new prep_TrainLine("Brown Line SB");
+        //prep_TrainLine brownLineSB = new prep_TrainLine("Brown Line SB");
         // A random station name
-        String randomName = "Oak Park";
+        //String randomName = "Oak Park";
     } // method main
 } // class TrainLine
